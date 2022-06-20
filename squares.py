@@ -39,8 +39,8 @@ for i in range(8):
 		mask2 = 255-mask2
 
 		if mask.any():
-			cv2.imwrite("squares/sq" + str(i) + str(j) + "preta.png",img)
+			cv2.imwrite("squaresMask2/sq" + str(i) + str(j) + "preta.png",mask2)
 		elif mask2.any():
-			cv2.imwrite("squares/sq" + str(i) + str(j) + "branca.png",img)
+			cv2.imwrite("squaresMask2/sq" + str(i) + str(j) + "branca.png",mask2)
 		else:
-			cv2.imwrite("squares/sq" + str(i) + str(j) + "vazia.png",img)
+			cv2.imwrite("squaresMask2/sq" + str(i) + str(j) + "vazia.png",mask2)
