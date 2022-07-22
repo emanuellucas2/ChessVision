@@ -23,9 +23,12 @@ while 1:
       
         # showing result, it take frame name and image 
         # output
+        focus = 100
+        cam.set(28, focus)
+        cam.set(CAP_PROP_AUTOFOCUS, 0) 
         imshow("Photo", image)
       
-        imwrite("photo4.png", image)
+        imwrite("homog.png", image)
 
         # If keyboard interrupt occurs, destroy image 
         # window

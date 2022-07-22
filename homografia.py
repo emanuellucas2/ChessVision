@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 
+
+
 # mouse callback function
 def draw_circle(event,x,y,flags,param):
     global ix,iy,i
@@ -9,26 +11,35 @@ def draw_circle(event,x,y,flags,param):
         iy[i] = y
         i = i + 1
 
+def find_pixels(table):
 # Create a black image, a window and bind the function to window
-table = cv2.imread('chessvision1.png')
-cv2.namedWindow('image')
-cv2.setMouseCallback('image',draw_circle)
+	cv2.namedWindow('image')
+	cv2.setMouseCallback('image',draw_circle)
+	
+	cv2.imshow('image',table)
+	cv2.waitKey()
 
-ix = [-1,-1,-1,-1]
-iy = [-1,-1,-1,-1]
-i = 0
+	pts_src = np.array([[ix[0], iy[0]], [ix[1], iy[1]], [ix[2], iy[2]],[ix[3], iy[3]]])
 
-cv2.imshow('image',table)
-cv2.waitKey()
+	pts_dst = np.array([[0, 0],[800, 0],[0, 800],[800, 800]])
+	h, status = cv2.findHomography(pts_src, pts_dst)
+	im_out = cv2.warpPerspective(table, h, (800,800))
 
-pts_src = np.array([[ix[0], iy[0]], [ix[1], iy[1]], [ix[2], iy[2]],[ix[3], iy[3]]])
+	cv2.imshow("Warped Source Image", im_out)
+	cv2.waitKey()
 
-pts_dst = np.array([[0, 0],[800, 0],[0, 800],[800, 800]])
-h, status = cv2.findHomography(pts_src, pts_dst)
-im_out = cv2.warpPerspective(table, h, (800,800))
+	cv2.imwrite('homografia.png')
+	cv2.destroyAllWindows()
 
-cv2.imshow("Warped Source Image", im_out)
-cv2.waitKey()
+	return pts_src
 
-cv2.imwrite('homografia.png',im_out)
-cv2.destroyAllWindows()
+def homografia(pts_src)
+
+	pts_dst = np.array([[0, 0],[800, 0],[0, 800],[800, 800]])
+	h, status = cv2.findHomography(pts_src, pts_dst)
+	im_out = cv2.warpPerspective(table, h, (800,800))
+
+	cv2.imshow("Warped Source Image", im_out)
+	cv2.waitKey()
+
+	return im_out
