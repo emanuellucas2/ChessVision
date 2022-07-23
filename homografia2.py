@@ -21,7 +21,7 @@ def find_pixels(table):
 	#print(ix)
 	#print(iy)
 	pts_src = np.array([[ix[0], iy[0]], [ix[1], iy[1]], [ix[2], iy[2]],[ix[3], iy[3]]])
-	#print(pts_src)
+	print(pts_src)
 	return pts_src
 
 def homografia(pts_src, table):

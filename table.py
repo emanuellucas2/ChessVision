@@ -13,7 +13,7 @@ sem = Semaphore(0)
 l = []
 gs = ChessEngine.GameState() ## inicializa jogo
 
-WIDTH = HEIGHT = 512 ##Tamanho pixels tab, dimensão do tabuleiro
+WIDTH = HEIGHT = 1024##Tamanho pixels tab, dimensão do tabuleiro
 DIMENSION = 8
 SQ_SIZE = HEIGHT // DIMENSION
 MAX_FPS = 15
@@ -116,8 +116,8 @@ def squares(table,ti,matrix):
 			blur = cv2.medianBlur(hsv ,7)
 			
 			#black
-			lower = np.array([0,0,6])
-			upper = np.array([165,191,28])
+			lower = np.array([0,0,0])
+			upper = np.array([185,201,48])
 
 			mask = cv2.inRange(blur, lower, upper)
 
@@ -126,6 +126,13 @@ def squares(table,ti,matrix):
 			upper = np.array([179,255,255])
 
 			mask2 = cv2.inRange(blur, lower, upper)
+
+			if mask.any():
+				cv2.imwrite("squares" + str(1) + "/" + str(i) + str(j) + "preta.png",img)
+			elif mask2.any:
+				cv2.imwrite("squares" + str(1) + "/" + str(i) + str(j) + "branca.png",img)
+			else:
+				cv2.imwrite("squares" + str(1) + "/" + str(i) + str(j) + "vazia.png",img)
 
 			if mask.any():
 				tf[i][j] = "b"
@@ -199,18 +206,18 @@ def squares(table,ti,matrix):
 
 		if(abs(y1-y2)==3):
 			if(x1==0):
-				matrix[0][6] = "wK"
-				matrix[0][5] = "wR"
+				matrix[0][6] = "bK"
+				matrix[0][5] = "bR"
 			else:
-				matrix[7][6] = "bK"
-				matrix[7][5] = "bR"
+				matrix[7][6] = "wK"
+				matrix[7][5] = "wR"
 		else:
 			if(x1==0):
-				matrix[0][2] = "wK"
-				matrix[0][3] = "wR"
+				matrix[0][2] = "bK"
+				matrix[0][3] = "bR"
 			else:
-				matrix[7][2] = "bK"
-				matrix[7][3] = "bR"
+				matrix[7][2] = "wK"
+				matrix[7][3] = "wR"
 
 		gs.makeMove(matrix)
 		return tf	
@@ -284,6 +291,8 @@ def ProcessImage():
 	image = l.pop()
 
 	pts = homografia2.find_pixels(image)
+	#pts = np.array([[1185 ,808],[588 ,799],[1192 , 206],[592 , 205]])
+	#print(pts)
 	img = homografia2.homografia(pts,image)
 
 	ti = init_squares(img)
